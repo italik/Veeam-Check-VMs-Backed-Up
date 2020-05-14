@@ -30,8 +30,8 @@ foreach ($vm in $vms) {
 }
 
 if ($vmList){
+    Write-Host "Found the following VMs which are not in a backup job:" -ForegroundColor Cyan
     foreach ($vm in $vmList){
-        Write-Host "Found the following VMs which are not in a backup job:" -ForegroundColor Cyan
         Write-Host $vm -ForegroundColor Red
     }
 }
