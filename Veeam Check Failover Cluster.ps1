@@ -1,4 +1,4 @@
-# Version 1.0
+# Version 1.1
 
 # Import Veeam Snapin
 asnp "VeeamPSSnapIn" -ErrorAction SilentlyContinue
