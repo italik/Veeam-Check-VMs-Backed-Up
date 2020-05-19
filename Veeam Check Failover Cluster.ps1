@@ -26,7 +26,13 @@ $vms = Find-VBRHvEntity | Where-Object {$_.Type -eq "Vm"} | Sort-Object Name
 
 if ($checkBackupJobs) {
     Write-Verbose "Checking all backups jobs within Veeam"
+    Write-Verbose "Getting a list of backup jobs"
     $backupJobs = Get-VBRJob
+    $vmsinBackupJob=@()
+    Write-Verbose "Getting a list of VMs in backup jobs"
+    foreach ($backupJob in $backupJobs) {
+        $vmsinBackupJob += $backupJob.GetObjectsInJob().Name
+    }
 }
 elseif ($checkRunningBackupJobs -and $includeFailedBackupJobs) {
     Write-Verbose "Checking backup jobs that have run in the last $($daysToCheck) days & including those jobs that have failed"
@@ -48,13 +54,10 @@ foreach ($vm in $vms) {
     Write-Progress -Activity "Backup Job Check" -Status "Checking to see if $($vm.Name) is in a backup job (VM $($i) of $($vmCount))" -PercentComplete $percentComplete
     $vmFound=@()
     if ($checkBackupJobs) {
-        foreach ($backupJob in $backupJobs) {
-            $vmsinBackupJob = $backupJob.GetObjectsInJob().Name
-            foreach ($vminBackupJob in $vmsinBackupJob) {
-                if ($vminBackupJob -eq $vm.Name) {
-                    $vmFound += "Found"
-                    Write-Verbose "Found $($vm.Name) In Backup Job $($backupJob.Name)"
-                }
+        foreach ($vminBackupJob in $vmsinBackupJob) {
+            if ($vminBackupJob -eq $vm.Name) {
+                $vmFound += "Found"
+                Write-Verbose "Found $($vm.Name) In Backup Job $($backupJob.Name)"
             }
         }
     }
