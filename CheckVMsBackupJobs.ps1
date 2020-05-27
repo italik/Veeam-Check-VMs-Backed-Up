@@ -4,9 +4,11 @@
     .DESCRIPTION
     Script outputs at the end which VMs are missing, and you can also use -verbose to get more output
     .EXAMPLE
-    CheckVMsBackupJobs.ps1 -includeFailedBackupJobs -daysToCheck 1
+    CheckVMsBackupJobs.ps1 -Environment HyperV -includeFailedBackupJobs -daysToCheck 1
+    Includes failed backup jobs within the last 1 day where the environment is HyperV
     .EXAMPLE
-    CheckVMsBackupJobs.ps1 -daysToCheck 1
+    CheckVMsBackupJobs.ps1 -Environment VMware -daysToCheck 1
+    Excludes failed backup jobs within the last 1 day where the environment is VMware
     .Notes
     NAME: CheckVMsBackupJobs.ps1
     VERSION: 1.1
@@ -16,8 +18,10 @@
  #>
 
 
-
 Param (
+    [Parameter( Mandatory=$true )]
+    [ValidateSet('HyperV','VMware')]
+    [string[]]$Environment,
 
     [Parameter( Mandatory=$false )]
     [switch]$includeFailedBackupJobs,
@@ -33,11 +37,19 @@ asnp "VeeamPSSnapIn" -ErrorAction SilentlyContinue
 $vms=@{}
 
 # Get list of all VMs from Hyper-V according to Veeam
-Write-Host "Getting list of all VMs from Hyper-V according to Veeam" -ForegroundColor Cyan
-Find-VBRHvEntity |
-    Where-Object {$_.Type -eq "Vm"} |
-    ForEach-Object {$vms.Add($_.ID, $_.Name)}
-
+if ($Environment -eq "HyperV") {
+    Write-Host "Getting list of all VMs from Hyper-V according to Veeam" -ForegroundColor Cyan
+    Find-VBRHvEntity |
+        Where-Object {$_.Type -eq "Vm"} |
+        ForEach-Object {$vms.Add($_.ID, $_.Name)}
+}
+# Get list of all VMs from VMWare according to Veeam <- Not tested!
+elseif ($Environment -eq "VMware"){
+    Write-Host "Getting list of all VMs from Hyper-V according to Veeam" -ForegroundColor Cyan
+    Find-VBRHvEntity |
+        Where-Object {$_.Type -eq "Vm"} |
+        ForEach-Object {$vms.Add($_.ID, $_.Name)}
+}
 
 Write-Host "Getting all backup task sessions" -ForegroundColor Cyan
 # Find all backup task sessions in the last X days including failures
