@@ -57,7 +57,7 @@ foreach ($vm in $vms) {
         foreach ($vminBackupJob in $vmsinBackupJob) {
             if ($vminBackupJob -eq $vm.Name) {
                 $vmFound += "Found"
-                Write-Verbose "Found $($vm.Name) In Backup Job $($backupJob.Name)"
+                Write-Verbose "Found $($vm.Name)"
             }
         }
     }
@@ -65,7 +65,7 @@ foreach ($vm in $vms) {
         foreach ($vmBackup in $vmBackups) {
             if ($vmBackups.Name -eq $vm.Name) {
                 $vmFound += "Found"
-                Write-Verbose "Found $($vm.Name) In Backup Job $($backupJob.Name)"
+                Write-Verbose "Found $($vm.Name)"
             }
         }
     }
