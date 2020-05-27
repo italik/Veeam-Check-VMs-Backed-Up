@@ -45,7 +45,7 @@ if ($Environment -eq "HyperV") {
 }
 # Get list of all VMs from VMWare according to Veeam <- Not tested!
 elseif ($Environment -eq "VMware"){
-    Write-Host "Getting list of all VMs from Hyper-V according to Veeam" -ForegroundColor Cyan
+    Write-Host "Getting list of all VMs from virtualisation infrastructure according to Veeam" -ForegroundColor Cyan
     Find-VBRHvEntity |
         Where-Object {$_.Type -eq "Vm"} |
         ForEach-Object {$vms.Add($_.ID, $_.Name)}
