@@ -1,18 +1,18 @@
 <#
-	.SYNOPSIS
-	This script allows you to check if there are VMs missing from a backup job when comparing it to a Hyper-V Server
-	.DESCRIPTION
-	Script outputs at the end which VMs are missing, and you can also use -verbose to get more output
-	.EXAMPLE
-	CheckVMsBackupJobs.ps1 -includeFailedBackupJobs -daysToCheck 1
-	.EXAMPLE
-	CheckVMsBackupJobs.ps1 -daysToCheck 1
-	.Notes
-	NAME: CheckVMsBackupJobs.ps1
+    .SYNOPSIS
+    This script allows you to check if there are VMs missing from a backup job when comparing it to a Hyper-V Server
+    .DESCRIPTION
+    Script outputs at the end which VMs are missing, and you can also use -verbose to get more output
+    .EXAMPLE
+    CheckVMsBackupJobs.ps1 -includeFailedBackupJobs -daysToCheck 1
+    .EXAMPLE
+    CheckVMsBackupJobs.ps1 -daysToCheck 1
+    .Notes
+    NAME: CheckVMsBackupJobs.ps1
     VERSION: 1.1
     AUTHOR: Robert Milner (@robm82)
-	.Link
-	https://www.italik.co.uk
+    .Link
+    https://www.italik.co.uk
  #>
 
 
