@@ -26,9 +26,13 @@ $vms = Find-VBRHvEntity | Where-Object {$_.Type -eq "Vm"} | Sort-Object Name
 
 if ($checkBackupJobs) {
     Write-Verbose "Checking all backups jobs within Veeam"
-    Write-Verbose "Getting a list of all VMs backup jobs"
-    $vmsinBackupJob=@{}
-    Get-VBRJob | ForEach-Object { $vmsinBackupJob.Add($_.GetObjectsInJob().Name) }
+    Write-Verbose "Getting a list of backup jobs"
+    $backupJobs = Get-VBRJob
+    $vmsinBackupJob=@()
+    Write-Verbose "Getting a list of VMs in backup jobs"
+    foreach ($backupJob in $backupJobs) {
+        $vmsinBackupJob += $backupJob.GetObjectsInJob().Name
+    }
 }
 elseif ($checkRunningBackupJobs -and $includeFailedBackupJobs) {
     Write-Verbose "Checking backup jobs that have run in the last $($daysToCheck) days & including those jobs that have failed"
