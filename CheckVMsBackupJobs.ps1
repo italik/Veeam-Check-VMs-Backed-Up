@@ -62,7 +62,8 @@ if ($includeFailedBackupJobs) {
 else {
     $vbrTaskSessions = (Get-VBRBackupSession |
     Where-Object {$_.JobType -eq "Backup" -and $_.EndTime -ge (Get-Date).AddDays(-$daysToCheck)}) |
-    Get-VBRTaskSession | Where-Object {$_.Status -ne "Failed"}
+    Get-VBRTaskSession |
+    Where-Object {$_.Status -ne "Failed"}
 }
 
 Write-Host "Checking VMs..." -ForegroundColor Cyan
