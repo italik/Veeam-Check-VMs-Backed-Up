@@ -1,4 +1,4 @@
-# Veeam-Check-VMs-Backed-Up-HyperV
-This will be a script to check that all Hyper-V VMs in a Failover Cluster are being backed up by Veeam
+# Veeam Check VMs Are Backed Up
+This will be a script to check that all VMware and Hyper-V VMs in a virtual environment are being backed up by Veeam.
 
-This script will report back on those Hyper-V virtual machines that are running in the cluster but are not being backed up by Veeam
+This script will also report back on those virtual machines that are running but are not being backed up by Veeam.
